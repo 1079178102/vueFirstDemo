@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello2</title>
+    <style type="text/css">
+        #app div{
+            width: 100px;
+            height: 100px;
+            color: darkgray;
+        }
+        .red{background-color: red}
+        .blue{background-color: blue}
+    </style>
+</head>
+<body>
+<div id="app">
+    <h3>切换方式一</h3>
+    <button @click="color='red'">红色</button>
+    <button @click="color='blue'">蓝色</button>
+    <!-- vue不会解析html原生属性(如class),所以data中的变量无法直接使用，
+         若需要解析则需要在前面加v-bind或: 才能被解析 -->
+    <!-- 此处:class="color" 会被解析为class="red" -->
+    <div id="box" :class="color">
+        我是盒子
+        我是盒子
+    </div>
+    <br>
+    <h3>切换方式二</h3>
+    <button @click="isRed=!isRed">点我切换颜色</button>
+    <div id="box2" :class="{red: isRed, blue: !isRed}">
+        我是盒子
+        我是盒子
+    </div>
+
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el:"#app", //element, vue 作用的标签
+        data:{
+            color:"red",
+            isRed:true
+        }
+    })
+</script>
+</body>
+</html>
