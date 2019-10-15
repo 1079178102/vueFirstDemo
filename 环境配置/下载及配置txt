@@ -1,0 +1,18 @@
+1.下载nodejs 链接 http://nodejs.cn/download/，无脑下一步式安装
+2.在cmd中输入node -v检测是否安装成功
+  自带npm可用npm -v检测
+3.安装镜像切换管理包工具nrm: 在cmd(管理员身份安装)输入npm install nrm -g
+4.切换镜像源
+nrm的使用命令：
+    1> nrm ls 查看镜像源
+    2> nrm test taobao[源名称] 查看源的速度
+    3> nrm use taobao[源名称] 切换镜像源
+5.重启电脑
+
+
+其他
+1.npm相关命令(在idea的控制台输入)
+    1>npm init -y 初始化项目(注意项目路径)
+        会出现package.json配置文件，相当于pom.xml
+    2>npm install vue --save 在项目中安装vue
+        会出现node_modules文件夹
