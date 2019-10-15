@@ -25,25 +25,81 @@
     <h1>您已购买下列课程:{{lessons.join(",")}}</h1>
 
     <!-- v-on -->
+    <!--
+        此处会有一个时间冒泡的问题，需要使用事件修饰符
+        事件修饰符有:   .stop     :   阻止事件冒泡
+                        .prevent  :   阻止默认事件发生
+                        .capture  :   使用事件捕获模式
+                        .self     :   只有元素自身触发事件才执行。(冒泡或捕获的都不执行)
+                        .once     :   只执行一次
+     -->
+    <hr>
+    <div style="width: 100px;height: 100px;background-color: brown" @click="print('div')">
+        我是div
+        <button @click.stop="print('button')">点我试试</button><!-- 使用.stop修饰符阻止事件冒泡 -->
+    </div>
+    <a href="http://www.baidu.com" @click.prevent="print('百度')">百度一下</a><!-- 使用.prevent阻止a标签的默认事件发生 -->
 
+    <!-- v-for -->
+    <hr>
+    <ul>
+        <li v-for="u in users">{{u.name + "," + u.gender + "," + u.age}}</li>
+        <br>
+        <li v-for="(u,i) in users">{{i}} : {{u.name + "," + u.gender + "," + u.age}}</li>
+        <br>
+        <li v-for="u in users[0]">{{u}}</li>
+        <br>
+        <li v-for="(value,key) in users[0]">{{key + ":" + value}}</li>
+        <br>
+        <li v-for="(value,key,i) in users[0]">{{i + "_" + key + ":" + value}}</li>
+        <br>
+        <!-- 使用[:key]来标识li，这样更新数据时，可以根据key对数据进行局部刷新，否则只能全部重新刷新 -->
+        <li v-for="(u,i) in users" :key="i">{{i}} : {{u.name + "," + u.gender + "," + u.age}}</li>
+    </ul>
+
+    <!-- v-if 与 v-show -->
+    <hr>
+    <button @click="show = !show">点击切换</button><br>
+    <h1 v-if="show">你好</h1><!-- v-if会直接干掉代码 -->
+    <h1 v-show="show">你很好</h1><!-- v-show只是修改css样式 -->
+    <ul>
+        <li v-for="i in 5" v-if="i%2 === 0">{{i}}</li>
+        <br>
+        <li v-for="i in 5">
+            <span v-if="i%2 === 0">偶数:{{i}}</span>
+            <span v-else-if="i === 3">整数:{{i}}</span>
+            <span v-else>奇数:{{i}}</span>
+        </li>
+    </ul>
 </div>
 <script src="node_modules/vue/dist/vue.js"></script>
 <script>
     const app = new Vue({
         el:"#app", //element, vue 作用的标签
         data:{
-            name: "徐鹏辉",
+            name: "XiaoMing",
             num: 1,
-            lessons: []
+            lessons: [],
+            users:[
+                {name: "张三", gender:"男", age: 20},
+                {name: "李四", gender:"男", age: 19},
+                {name: "小红", gender:"女", age: 18},
+                {name: "王五", gender:"男", age: 17},
+                {name: "李六", gender:"男", age: 16}
+            ],
+            show:true
         },
         methods:{
             handleClick(){
                 console.log("Hello!")
+            },
+            print(msg){
+                console.log(msg)
             }
         },
         created(){
             // 向后台发起ajax请求，完成data数据初始化
-            this.name = "xph"
+            this.name = "小明"
         }
     })
 </script>
