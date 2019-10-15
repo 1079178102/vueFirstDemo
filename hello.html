@@ -6,19 +6,44 @@
 </head>
 <body>
 <div id="app">
+    <!--  vue基本使用 -->
+    <button @click="handleClick">点我</button>
+    <br>
     <input type="text" v-model="num"><button @click="num++">+</button>
     <h1>
+        <!-- {{}}插值表达式会受网速影响所以开发环境不建议使用,建议使用v-text绑定数据 -->
+        <!--{{name}}非常帅!<br>-->
         {{name}}非常帅!<br>
-        {{num}}位女神为其着迷
+        <span v-text="num"></span>位女神为其着迷!
     </h1>
+
+    <!-- v-model -->
+    <hr>
+    <input type="checkbox" v-model="lessons" value="Java"/>Java <br>
+    <input type="checkbox" v-model="lessons" value="Python"/>Python <br>
+    <input type="checkbox" v-model="lessons" value="C++"/>C++ <br>
+    <h1>您已购买下列课程:{{lessons.join(",")}}</h1>
+
+    <!-- v-on -->
+
 </div>
 <script src="node_modules/vue/dist/vue.js"></script>
 <script>
     const app = new Vue({
         el:"#app", //element, vue 作用的标签
         data:{
-            name : "xph",
-            num : 1
+            name: "徐鹏辉",
+            num: 1,
+            lessons: []
+        },
+        methods:{
+            handleClick(){
+                console.log("Hello!")
+            }
+        },
+        created(){
+            // 向后台发起ajax请求，完成data数据初始化
+            this.name = "xph"
         }
     })
 </script>
