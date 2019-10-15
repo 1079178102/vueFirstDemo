@@ -15,6 +15,8 @@
 </head>
 <body>
 <div id="app">
+
+    <!-- v-bind 与 class-->
     <h3>切换方式一</h3>
     <button @click="color='red'">红色</button>
     <button @click="color='blue'">蓝色</button>
@@ -33,14 +35,55 @@
         我是盒子
     </div>
 
+    <!-- 计算属性 -->
+    <h1>
+        您的生日:{{birth}}<br>
+        您的生日:{{birth}}<br>
+        您的生日:{{birth}}
+    </h1>
+
+    <!-- watch 监控 -->
+    <!-- 数据监控，数据修改会触发相应方法 -->
+    <input type="text" v-model="num">
+    <h1>num:{{num}}</h1>
+    <br>
+    <button @click="person.age++">person.age++</button>
+    <h1>person.age:{{person.age}}</h1>
 </div>
 <script src="node_modules/vue/dist/vue.js"></script>
 <script>
     const app = new Vue({
         el:"#app", //element, vue 作用的标签
         data:{
-            color:"red",
-            isRed:true
+            color: "red",
+            isRed: true,
+            birthday: 1571150566205, //毫秒值
+            num: 1,
+            person:{
+                name: "Jack",
+                age: 21
+            }
+        },
+        computed:{
+            //birth 在此处看似方法，其实是属性
+            birth(){
+                console.log("将毫秒值转换为日期");//用于证明birthday只会被计算一次
+                const day = new Date(this.birthday);
+                return day.getFullYear() + "年" + day.getMonth() + "月" + day.getDay() + "日";
+            }
+        },
+        watch:{
+            //属性监控: 浅监控
+            num(val,oldVal){
+                console.log(val,oldVal);
+            },
+            //对象监控; 深度监控  ，浅监控无法监控对象必须使用深度监控
+            person:{
+                deep:true, //deep：代表深度监控，不仅监控person变化,也监控person中属性的变化
+                handler(val){ //handler：就是以前的监控处理函数
+                    console.log(val.age)
+                }
+            }
         }
     })
 </script>
