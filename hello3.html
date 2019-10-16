@@ -17,7 +17,7 @@
 <script>
     /*
         组件的使用，直接用组件名为标签使用
-        名称中不能有大写字母
+        若组件名称有大写如 A 使用 -a代替
     */
     // 定义全局组件
     Vue.component("counter_global",{
@@ -40,7 +40,7 @@
         data:{
         },
         components:{
-            //在ES6的语法中key和value一样时可以简写成一个key
+            // 在ES6的语法中key和value一样时可以简写成一个key
             counter_local
             // counter_local : counter_local
         }

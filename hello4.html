@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello4</title>
+</head>
+<body>
+<div id="app">
+    <introduce :title="msg"></introduce>
+    <hr>
+    <!--若组件名称有大写如 A 使用 -a代替-->
+    <for-component :items="lessons"></for-component>
+    <hr>
+    <for-component ></for-component>
+</div>
+
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    /*
+        父向子传递数据：
+            将app中定义的msg传递到introduce组件中使用
+                1.将app中msg与introduce的标签进行绑定
+                2.在introduce的props中添加与msg绑定的属性
+                3.在introduce中就可以使用绑定后的属性了
+     */
+    const introduce = {
+        template:"<h1>{{title}}</h1>",
+        props:['title']
+    };
+
+    const forComponent = {
+        template: "<ul><li v-for='item in items'>{{item}}</li></ul>",
+        // props:['items']
+        //props进阶写法
+        props: {
+            items:{
+                type:Array, // 设置items的类型为Array
+                default:['java'] // 设置items的默认值，当标签中没有绑定数据时会使用
+                // 还有很多写法，https://cn.vuejs.org/v2/api/#props
+            }
+        }
+    };
+
+    const app = new Vue({
+        el: "#app", //element, vue 作用的标签
+        data:{
+            msg:"大家好，我是小明",
+            lessons:['java','python','c++']
+        },
+        components:{
+            introduce,
+            forComponent
+        }
+    })
+</script>
+</body>
+</html>
