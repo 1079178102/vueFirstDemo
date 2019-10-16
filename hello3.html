@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello2</title>
+</head>
+<body>
+<div id="app">
+    <counter_global></counter_global>
+    <counter_global></counter_global>
+    <hr>
+    <counter_local></counter_local>
+    <counter_local></counter_local>
+</div>
+
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    /*
+        组件的使用，直接用组件名为标签使用
+        名称中不能有大写字母
+    */
+    // 定义全局组件
+    Vue.component("counter_global",{
+        template:"<button @click='count++'>点我试试，我记住你了,点了我{{count}}次-全局</button>",
+        // 因为需要数据的可复用性所以参数以返回值得形式给出
+        data(){
+            return{
+                count:0
+            }
+        }
+    });
+
+    //  局部组件
+    const counter_local = {
+        template:"<button @click='count++'>点我试试，我记住你了,点了我{{count}}次-局部</button>",
+        data(){return{count:0}}
+    };
+    const app = new Vue({
+        el: "#app", //element, vue 作用的标签
+        data:{
+        },
+        components:{
+            //在ES6的语法中key和value一样时可以简写成一个key
+            counter_local
+            // counter_local : counter_local
+        }
+    })
+</script>
+</body>
+</html>
