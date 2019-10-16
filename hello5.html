@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello5</title>
+</head>
+<body>
+<div id="app">
+    <counter :num="count" @incr="add" @decr="reduce"></counter>
+</div>
+
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    /*
+        子向父无法直接通信，需通过子调用父的方法来通信
+        1.父在子标签上绑定自己的方法  @incr="add" @decr="reduce"  (@名称[名称随意]="父的方法名")
+        2.在子的methods中进行调用
+        3.在button上绑定子的methods中的方法
+     */
+    const counter = {
+        template:`<div>
+                        <button @click="handleAdd">+</button>
+                        <button @click="handleReduce">-</button>
+                        <h1>NUM:{{num}}</h1>
+                   </div>`,
+        props:['num'],
+        methods:{
+            handleAdd(){
+                this.$emit('incr'); //(函数名称，函数参数...)
+            },
+            handleReduce(){
+                this.$emit('decr',2);
+            }
+        }
+    };
+
+    const app = new Vue({
+        el: "#app", //element, vue 作用的标签
+        data:{
+            count:0
+        },
+        components:{
+            counter
+        },
+        methods:{
+            add(){
+                this.count++;
+            },
+            reduce(val){
+                this.count -= val;
+            }
+        }
+    })
+</script>
+</body>
+</html>
